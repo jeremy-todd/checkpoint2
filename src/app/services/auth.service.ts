@@ -3,6 +3,7 @@ import { IUser } from "../interfaces/iuser";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +12,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<IUser>;
   public currentUser: Observable<IUser>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<IUser>(
       JSON.parse(localStorage.getItem("currentUser"))
     );
@@ -40,6 +41,7 @@ export class AuthService {
     // remove user from local storage to log user out
     localStorage.removeItem("currentUser");
     this.currentUserSubject.next(null);
+    this.router.navigateByUrl("login");
   }
 
   register(user: any): Observable<IUser> {

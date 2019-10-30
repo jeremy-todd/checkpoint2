@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IUser } from '../interfaces/iuser';
 import { UserProfileService } from '../services/user-profile.service';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,7 +16,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private UserProfileService: UserProfileService,
-    private UserService: UserService
+    private UserService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -43,5 +45,6 @@ export class UserProfileComponent implements OnInit {
   deleteMe() {
     //this.UserService.deleteUser();
     console.log("Delete has been clicked.");
+    this.authService.logout();
   }
 }
